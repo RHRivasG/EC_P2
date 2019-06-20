@@ -1,0 +1,140 @@
+/*PROYECTO. ESTRUCTURA DEL COMPUTADOR.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+	int A[10][10]={ {0,1,2,3,4,5,6,7,8,9},
+					{0,1,2,3,4,5,6,7,8,9},
+					{0,1,2,3,4,5,6,7,8,9},
+					{0,1,2,3,4,5,6,7,8,9},
+					{0,1,2,3,4,5,6,7,8,9},
+					{0,1,2,3,4,5,6,7,8,9},
+					{0,1,2,3,4,5,6,7,8,9},
+					{0,1,2,3,4,5,6,7,8,9},
+					{0,1,2,3,4,5,6,7,8,9},
+					{0,1,2,3,4,5,6,7,8,9},
+					};
+
+	int B[10][10]={ {9,8,7,6,5,4,3,2,1,0},
+					{9,8,7,6,5,4,3,2,1,0},
+					{9,8,7,6,5,4,3,2,1,0},
+					{9,8,7,6,5,4,3,2,1,0},
+					{9,8,7,6,5,4,3,2,1,0},
+					{9,8,7,6,5,4,3,2,1,0},
+					{9,8,7,6,5,4,3,2,1,0},
+					{9,8,7,6,5,4,3,2,1,0},
+					{9,8,7,6,5,4,3,2,1,0},
+					{9,8,7,6,5,4,3,2,1,0}
+					};
+
+	int C[10][10]={	{0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0},
+					};
+
+void leerMatrices(int A[10][10], int B[10][10]){
+
+}
+
+void mostrarMatriz(int matriz[10][10]){
+	for(int x=0; x<10; x++){
+		printf("\t");
+		for(int y=0; y<10; y++){
+			printf("[%i]",matriz[x][y]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+
+void mostrarMatrices(int A[10][10], int B[10][10]){
+	system("cls");
+	printf("Matriz A:\n");
+	mostrarMatriz(A);
+	printf("Matriz B:\n");
+	mostrarMatriz(B);
+	system("pause");
+}
+
+void suma(int A[10][10], int B[10][10]){
+	for (int x=0; x<10; x++)
+		for (int y=0; y<10; y++)
+			B[x][y]+= A[x][y];
+}
+
+void resta(int A[10][10], int B[10][10]){
+	for (int x=0; x<10; x++)
+		for (int y=0; y<10; y++)
+			A[x][y]-= B[x][y];
+}
+
+int multiplicar(int A[10][10], int fila, int B[10][10], int columna){
+	int producto=0;
+	for (int x=0; x<10; x++){
+		producto+= A[fila][x]*B[x][columna];
+	}
+	return producto;
+}
+
+void multiplicacion(int A[10][10], int B[10][10], int C[10][10]){
+	for (int x=0; x<10; x++)
+		for (int y=0; y<10; y++)
+			C[x][y]=multiplicar(A,x,B,y);
+}
+
+void menu(){
+	int x=-1;
+	while(x){
+		system("cls");
+		printf("Menú principal\n");
+		printf("--------------\n\n");
+		printf("\t Opciones:\n");
+		printf("\t ---------\n");
+		printf("\t 1.Leer matrices A y B\n");
+		printf("\t 2.Mostrar matrices A y B\n");
+		printf("\t 3.Calcular A+B en B\n");
+		printf("\t 4.Calcular A-B en A\n");
+		printf("\t 5.Multiplicar AxB en una matriz C\n");
+		printf("\t 6.Mostrar matriz auxiliar C\n");
+		printf("\t 0.SALIR\n");
+		printf("\n\t Opcion: ");
+		scanf("%i",&x);
+		if (x)
+		switch(x){
+			case 1:	leerMatrices(A,B);
+					break;
+			case 2: mostrarMatrices(A,B);
+					break;
+			case 3:	suma(A,B);
+					printf("\n");
+					system("pause");
+					break;
+			case 4:	resta(A,B);
+					printf("\n");
+					system("pause");
+					break;
+			case 5:	multiplicacion(A,B,C);
+					printf("\n");
+					system("pause");
+					break;
+			case 6:	system("cls");
+					printf("Matriz C:\n");
+					mostrarMatriz(C);
+					printf("\n");
+					system("pause");
+					break;	
+		}
+	}
+}
+
+void main(){
+	menu();
+	system("pause");
+}
