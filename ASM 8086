@@ -135,18 +135,57 @@ void resta(){
 	}
 }
 
-int multiplicar(int A[10][10], int fila, int B[10][10], int columna){
-	int producto=0;
-	for (int x=0; x<10; x++){
-		producto+= A[fila][x]*B[x][columna];
+int fila, columna, producto;
+void multiplicar(){
+	int x,y;
+	_asm{
+		mov producto,0
+
+		mov x,0
+		L1:
+		cmp x,10
+		jge F1
+
+			//Indice de A
+			mov eax,fila 
+			mov ebx,40
+			mul ebx
+			mov esi,eax
+			mov eax,x
+			mov ebx,4
+			mul ebx
+			add esi,eax
+
+			//Indice de B
+			mov eax,x 
+			mov ebx,40
+			mul ebx
+			mov edi,eax
+			mov eax,columna
+			mov ebx,4
+			mul ebx
+			add edi,eax
+
+			mov eax,[A+esi]
+			mov ebx,[B+edi]
+			mul ebx
+			add producto,eax
+
+		inc x
+		jmp L1
+		F1:
+
 	}
-	return producto;
 }
 
 void multiplicacion(int A[10][10], int B[10][10], int C[10][10]){
 	for (int x=0; x<10; x++)
-		for (int y=0; y<10; y++)
-			C[x][y]=multiplicar(A,x,B,y);
+		for (int y=0; y<10; y++){
+			fila=x;
+			columna=y;
+			multiplicar();
+			C[x][y]=producto;
+		}
 }
 
 void menu(){
