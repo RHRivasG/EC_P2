@@ -99,10 +99,40 @@ void suma(){
 	}
 }
 
-void resta(int A[10][10], int B[10][10]){
-	for (int x=0; x<10; x++)
-		for (int y=0; y<10; y++)
-			A[x][y]-= B[x][y];
+void resta(){
+	int x,y;
+	_asm{
+		mov x,0		
+		L1:
+		cmp x,10 
+		jge F1
+
+			mov y,0
+			L2:
+			cmp y,10
+			jge F2
+
+				mov eax,x 
+				mov ebx,40 // 40= 4(bytes) * 10(columnas) -> Longitud de cada fila
+				mul ebx
+				mov esi,eax
+
+				mov eax,y
+				mov ebx,4 // 4= 4(bytes) * 1(columna) -> Longitud de cada columna
+				mul ebx
+				add esi,eax
+
+				mov ebx,[B+esi]
+				sub [A+esi],ebx
+
+			inc y
+			jmp L2
+			F2:
+	
+		inc x
+		jmp L1
+		F1:	
+	}
 }
 
 int multiplicar(int A[10][10], int fila, int B[10][10], int columna){
@@ -146,7 +176,7 @@ void menu(){
 					printf("\n");
 					system("pause");
 					break;
-			case 4:	resta(A,B);
+			case 4:	resta();
 					printf("\n");
 					system("pause");
 					break;
