@@ -39,6 +39,8 @@
 					{0,0,0,0,0,0,0,0,0,0},
 					};
 
+	int n; //Orden de la matriz cuadrada nxn
+
 void leerMatrices(int A[10][10], int B[10][10]){
 
 }
@@ -178,14 +180,46 @@ void multiplicar(){
 	}
 }
 
-void multiplicacion(int A[10][10], int B[10][10], int C[10][10]){
-	for (int x=0; x<10; x++)
-		for (int y=0; y<10; y++){
-			fila=x;
-			columna=y;
-			multiplicar();
-			C[x][y]=producto;
-		}
+void multiplicacion(){
+	int x,y;
+	_asm{
+		mov x,0		
+		L1:
+		cmp x,10 
+		jge F1
+
+			mov y,0
+			L2:
+			cmp y,10
+			jge F2
+
+				mov eax,x
+				mov fila,eax
+				mov eax,y
+				mov columna,eax
+				call multiplicar
+
+				//Indice de C
+				mov eax,x 
+				mov ebx,40
+				mul ebx
+				mov esi,eax
+				mov eax,y
+				mov ebx,4
+				mul ebx
+				add esi,eax
+
+				mov eax,producto
+				mov [C+esi],eax
+
+			inc y
+			jmp L2
+			F2:
+	
+		inc x
+		jmp L1
+		F1:	
+	}
 }
 
 void menu(){
@@ -219,7 +253,7 @@ void menu(){
 					printf("\n");
 					system("pause");
 					break;
-			case 5:	multiplicacion(A,B,C);
+			case 5:	multiplicacion();
 					printf("\n");
 					system("pause");
 					break;
