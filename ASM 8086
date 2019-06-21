@@ -42,7 +42,7 @@
 					{0,0,0,0,0,0,0,0,0,0},
 					};
 
-	int n=0; ////Orden de las matrices cuadrada nxn 
+	int n=0; //Orden de las matrices cuadrada nxn 
 
 void mostrarMatriz(int matriz[10][10], int n);
 
